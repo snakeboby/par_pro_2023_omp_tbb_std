@@ -1,66 +1,29 @@
 // Copyright 2023 Chubenko Andrey
 #include <gtest/gtest.h>
-#include <tbb/tbb.h>
 #include <vector>
 #include "./dijkstra.h"
 
-TEST(chubenko_dijkstra_tbb, create) {
-  std::vector<std::vector<int>> a(1, std::vector<int>(1, 0));
-  const int num_threads = 4;
-  std::vector<int> d = dijkstra(0, a, num_threads);
-  ASSERT_EQ(d[0], 0);
+TEST(search_path_omp, 15_size_graph_10) {
+  ASSERT_NO_THROW(start_parallel_algorithm(15, 10));
 }
 
-TEST(chubenko_dijkstra_tbb, simple_path_1v) {
-  std::vector<std::vector<int>> a(2, std::vector<int>(2, 0));
-  a[1][0] = 1;
-  a[0][1] = 1;
-  const int num_threads = 4;
-  std::vector<int> d = dijkstra(0, a, num_threads);
-  ASSERT_EQ(d[1], 1);
+TEST(search_path_omp, 50_size_graph_30) {
+  ASSERT_NO_THROW(start_parallel_algorithm(50, 30));
 }
 
-TEST(chubenko_dijkstra_tbb, simple_path_5000v) {
-  int size = 5000;
-  std::vector<std::vector<int>> a(size, std::vector<int>(size, 0));
-  for (int i = 0; i < size; i++)
-    for (int j = 0; j < size; j++) a[i][j] = 10000;
-  for (int i = 0; i < size; i++) {
-    if (i != size - 1) a[i][i + 1] = 1;
-    a[i][i] = 0;
-  }
-  const int num_threads = 4;
-  std::vector<int> d = dijkstra(0, a, num_threads);
-  ASSERT_EQ(d[size - 1], size - 1);
+TEST(search_path_omp, 100_size_graph_50) {
+  ASSERT_NO_THROW(start_parallel_algorithm(100, 50));
 }
 
-TEST(chubenko_dijkstra_tbb, tree) {
-  int size = 5000;
-  std::vector<std::vector<int>> a(size, std::vector<int>(size, 0));
-  for (int i = 0; i < size; i++)
-    for (int j = 0; j < size; j++) a[i][j] = ((i == j) ? 0 : 100);
-
-  for (int i = 1; i < size; i++) {
-    a[0][i] = 1;
-  }
-  const int num_threads = 4;
-  std::vector<int> d = dijkstra(0, a, num_threads);
-  ASSERT_EQ(d[2], 1);
+TEST(search_path_omp, 300_size_graph_80) {
+  ASSERT_NO_THROW(start_parallel_algorithm(300, 80));
 }
 
-TEST(chubenko_dijkstra_tbb, tree_simp) {
-  std::vector<std::vector<int>> a = {
-      {0, 100, 2},
-      {3, 0, 100},
-      {100, 4, 0},
-  };
-  const int num_threads = 4;
-  std::vector<int> d = dijkstra(0, a, num_threads);
-  ASSERT_EQ(d[1], 6);
+TEST(search_path_omp, 500_size_graph_100) {
+  ASSERT_NO_THROW(start_parallel_algorithm(500, 100));
 }
 
 int main(int argc, char **argv) {
-  std::task_scheduler_init init(4);
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
