@@ -63,7 +63,7 @@ void start_parallel_algorithm(int num_of_vertex,
         tbb::blocked_range<int>(0, num_of_vertex, grainsize), general,
         [&](const tbb::blocked_range<int>& range, Minimum local) {
           for (int j = range.begin(); j < range.end(); j++) {
-            if (!passed_vertexes[j] && min_destinations[j] < 
+            if (!passed_vertexes[j] && min_destinations[j] <
 local.min_dest) {
               local.min_dest = min_destinations[j];
               local.last_index = j;
