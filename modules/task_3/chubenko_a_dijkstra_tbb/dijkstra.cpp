@@ -1,5 +1,5 @@
 // Copyright 2023 Chubenko Andrey
-#include "dijkstra.h"
+#include "./dijkstra.h"
 #include <tbb/tbb.h>
 #include <algorithm>
 #include <iostream>
