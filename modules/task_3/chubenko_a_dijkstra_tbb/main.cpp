@@ -60,7 +60,7 @@ TEST(chubenko_dijkstra_tbb, tree_simp) {
 }
 
 int main(int argc, char **argv) {
-  tbb::task_scheduler_init init(4);
+  std::task_scheduler_init init(4);
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
